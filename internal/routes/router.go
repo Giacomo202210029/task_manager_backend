@@ -6,6 +6,7 @@ package routes
 import (
 	"Goland/internal/controllers"
 	"github.com/gorilla/mux"
+	"github.com/swaggo/http-swagger"
 )
 
 func SetupRouter() *mux.Router {
@@ -33,6 +34,9 @@ func SetupRouter() *mux.Router {
 	//se asigna la ruta /tasks con el metodo GET a la funcion GetTasks
 	router.HandleFunc("/tasks", controllers.GetTasks).Methods("GET")
 	router.HandleFunc("/tasks", controllers.CreateTask).Methods("POST")
+	router.HandleFunc("/users", controllers.GetUsers).Methods("GET")
+	router.HandleFunc("/users", controllers.CreateUser).Methods("POST")
+	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 
 	// Puedes agregar más rutas para actualizar y eliminar tareas
 	return router
