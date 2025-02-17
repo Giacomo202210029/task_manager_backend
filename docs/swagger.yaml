@@ -1,0 +1,99 @@
+definitions:
+  models.Task:
+    properties:
+      completed:
+        type: boolean
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /tasks:
+    get:
+      description: Retorna la lista de tareas almacenadas
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Task'
+            type: array
+      summary: Obtener todas las tareas
+      tags:
+      - Tasks
+    post:
+      consumes:
+      - application/json
+      description: Crea una nueva tarea en la lista
+      parameters:
+      - description: Datos de la nueva tarea
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.Task'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Task'
+      summary: Crear una nueva tarea
+      tags:
+      - Tasks
+  /users:
+    get:
+      description: Retorna la lista de usuarios almacenados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      summary: Obtener todos los usuarios
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Crea un nuevo usuario y lo agrega a la lista de usuarios
+      parameters:
+      - description: Datos del nuevo usuario
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Crear un nuevo usuario
+      tags:
+      - Users
+swagger: "2.0"
