@@ -1,18 +1,21 @@
-package main //definimos que esto es el main.
+package main
 
-//importamos log para imprimir mensajes
-//las funciones http y nuestro router
 import (
-	"Goland/internal/routes"
 	"log"
 	"net/http"
+
+	_ "Goland/docs" // Importa la documentación generada por Swag
+	"Goland/internal/routes"
+
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-// func main se ejecuta al iniciar la aplicacion
 func main() {
 	router := routes.SetupRouter()
+
+	// Ruta para acceder a Swagger UI
+	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
+
 	log.Println("Servidor corriendo en http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
-
-//se llama a routes para asignar y configurar todas las rutas
